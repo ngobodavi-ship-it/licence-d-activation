@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Ventes Pro - Activation Requise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .license-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            background: #fee;
+            border-left: 4px solid #f44;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #c33;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            background: #efe;
+            border-left: 4px solid #4f4;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #383;
+            font-size: 14px;
+            display: none;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .contact-info p {
+            font-size: 13px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .license-key {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-expired {
+            background: #fee;
+            color: #c33;
+        }
+
+        .status-active {
+            background: #efe;
+            color: #383;
+        }
+    </style>
+</head>
+<body>
+    <div class="license-container">
+        <div class="logo">🔐</div>
+        <h1>Activation de Licence</h1>
+        <p class="subtitle">Gestion des Ventes Pro v1.0</p>
+
+        <div class="info-box">
+            <p><strong>📱 Appareil:</strong> <span id="deviceInfo">Chargement...</span></p>
+            <p><strong>📅 Statut:</strong> <span id="licenseStatus" class="status-badge status-expired">Non activé</span></p>
+            <p><strong>⏰ Expiration:</strong> <span id="expiryDate">--</span></p>
+        </div>
+
+        <form id="licenseForm">
+            <div class="form-group">
+                <label for="licenseKey">Clé de Licence</label>
+                <input 
+                    type="text" 
+                    id="licenseKey" 
+                    class="license-key"
+                    placeholder="XXXX-XXXX-XXXXXX-XXXX"
+                    maxlength="21"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="ownerName">Nom du Propriétaire</label>
+                <input 
+                    type="text" 
+                    id="ownerName" 
+                    placeholder="Votre nom ou nom de votre boutique"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn">🚀 Activer la Licence</button>
+        </form>
+
+        <div class="error" id="errorMsg"></div>
+        <div class="success" id="successMsg"></div>
+
+        <div class="contact-info">
+            <p>📞 <strong>Besoin d'une licence ?</strong></p>
+            <p>WhatsApp: <a href="tel:+242XXXXXXXXX">+242 XX XXX XXXX</a></p>
+            <p>Email: <a href="mailto:contact@example.com">contact@example.com</a></p>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // SYSTÈME DE LICENCE
+        // ==========================================
+
+        // Configuration
+        const LICENSE_CONFIG = {
+            encryptionKey: 'VOTRE_CLE_SECRETE_2024', // Changez cette clé !
+            trialDays: 0, // Nombre de jours d'essai gratuit (0 = pas d'essai)
+            checkFrequency: 24 * 60 * 60 * 1000 // Vérifier toutes les 24h
+        };
+
+        // Générer un identifiant unique pour l'appareil
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('deviceId');
+            if (!deviceId) {
+                deviceId = 'DEV-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('deviceId', deviceId);
+            }
+            return deviceId;
+        }
+
+        // Fonction de hachage simple (pour validation basique)
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return Math.abs(hash).toString(36);
+        }
+
+        // Valider la clé de licence
+        function validateLicenseKey(licenseKey, deviceId) {
+            // Format: XXXX-XXXX-XXXXXX-XXXX (la partie expiry est maintenant 6 caractères)
+            if (!/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{6}-[A-Z0-9]{4}$/.test(licenseKey)) {
+                return { valid: false, reason: 'Format de clé invalide' };
+            }
+
+            // Extraire les parties de la clé
+            const parts = licenseKey.split('-');
+            const keyPrefix = parts[0]; // Identifiant client
+            const keyHash = parts[1]; // Hash de validation
+            const keyExpiry = parts[2]; // Date d'expiration encodée (6 caractères)
+            const keyCheck = parts[3]; // Code de vérification
+
+            // Vérifier le code de vérification
+            const expectedCheck = simpleHash(keyPrefix + keyHash + keyExpiry + LICENSE_CONFIG.encryptionKey).substr(0, 4).toUpperCase();
+            
+            if (keyCheck !== expectedCheck) {
+                return { valid: false, reason: 'Clé de licence invalide ou falsifiée' };
+            }
+
+            // Décoder la date d'expiration (format base36)
+            const expiryTimestamp = parseInt(keyExpiry, 36);
+            const expiryDate = new Date(expiryTimestamp * 1000);
+            const now = new Date();
+
+            if (expiryDate < now) {
+                return { 
+                    valid: false, 
+                    reason: 'Licence expirée le ' + expiryDate.toLocaleDateString('fr-FR'),
+                    expired: true,
+                    expiryDate: expiryDate
+                };
+            }
+
+            return {
+                valid: true,
+                expiryDate: expiryDate,
+                keyPrefix: keyPrefix
+            };
+        }
+
+        // Sauvegarder la licence
+        function saveLicense(licenseKey, ownerName, expiryDate) {
+            const licenseData = {
+                key: licenseKey,
+                owner: ownerName,
+                deviceId: getDeviceId(),
+                activatedAt: new Date().toISOString(),
+                expiryDate: expiryDate.toISOString(),
+                lastCheck: new Date().toISOString()
+            };
+
+            localStorage.setItem('appLicense', JSON.stringify(licenseData));
+        }
+
+        // Vérifier la licence actuelle
+        function checkCurrentLicense() {
+            const licenseData = localStorage.getItem('appLicense');
+            
+            if (!licenseData) {
+                return { valid: false, reason: 'Aucune licence activée' };
+            }
+
+            try {
+                const license = JSON.parse(licenseData);
+                const validation = validateLicenseKey(license.key, license.deviceId);
+
+                if (!validation.valid) {
+                    // Licence invalide, supprimer
+                    localStorage.removeItem('appLicense');
+                    return validation;
+                }
+
+                // Mettre à jour la dernière vérification
+                license.lastCheck = new Date().toISOString();
+                localStorage.setItem('appLicense', JSON.stringify(license));
+
+                return {
+                    valid: true,
+                    license: license,
+                    expiryDate: new Date(license.expiryDate)
+                };
+            } catch (e) {
+                localStorage.removeItem('appLicense');
+                return { valid: false, reason: 'Données de licence corrompues' };
+            }
+        }
+
+        // Afficher les informations de l'appareil
+        document.getElementById('deviceInfo').textContent = getDeviceId();
+
+        // Vérifier la licence au chargement
+        const currentLicense = checkCurrentLicense();
+        
+        if (currentLicense.valid) {
+            document.getElementById('licenseStatus').textContent = 'Activé';
+            document.getElementById('licenseStatus').className = 'status-badge status-active';
+            document.getElementById('expiryDate').textContent = currentLicense.expiryDate.toLocaleDateString('fr-FR');
+            
+            document.getElementById('successMsg').textContent = '✅ Licence déjà activée ! Redirection...';
+            document.getElementById('successMsg').style.display = 'block';
+            
+            // Rediriger automatiquement
+            setTimeout(() => {
+                window.location.href = 'gestion-ventes-mobile-AVEC-LICENCE.html';
+            }, 1500);
+        } else {
+            document.getElementById('licenseStatus').textContent = 'Non activé';
+            document.getElementById('expiryDate').textContent = '--';
+        }
+
+        // Formater automatiquement la clé de licence (Format: XXXX-XXXX-XXXXXX-XXXX)
+        document.getElementById('licenseKey').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+            let formatted = '';
+            
+            // Format: 4-4-6-4 caractères
+            for (let i = 0; i < value.length && i < 18; i++) {
+                if (i === 4 || i === 8 || i === 14) {
+                    formatted += '-';
+                }
+                formatted += value[i];
+            }
+            
+            e.target.value = formatted;
+        });
+
+        // Gérer la soumission du formulaire
+        document.getElementById('licenseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const licenseKey = document.getElementById('licenseKey').value.trim();
+            const ownerName = document.getElementById('ownerName').value.trim();
+            const deviceId = getDeviceId();
+
+            // Masquer les messages précédents
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
+
+            // Valider la clé
+            const validation = validateLicenseKey(licenseKey, deviceId);
+
+            if (!validation.valid) {
+                document.getElementById('errorMsg').textContent = '❌ ' + validation.reason;
+                document.getElementById('errorMsg').style.display = 'block';
+                return;
+            }
+
+            // ⚠️ NETTOYER TOUTES LES DONNÉES EXISTANTES AVANT D'ACTIVER LA NOUVELLE LICENCE
+            // Cela garantit que chaque nouveau client démarre avec une application propre
+            const itemsToKeep = ['shopConfig']; // Garder seulement la config de la boutique si elle existe
+            const allKeys = Object.keys(localStorage);
+            allKeys.forEach(key => {
+                if (!itemsToKeep.includes(key)) {
+                    localStorage.removeItem(key);
+                }
+            });
+
+            // Sauvegarder la NOUVELLE licence
+            saveLicense(licenseKey, ownerName, validation.expiryDate);
+
+            // Afficher le succès
+            document.getElementById('successMsg').textContent = '✅ Licence activée avec succès ! Redirection vers l\'application...';
+            document.getElementById('successMsg').style.display = 'block';
+
+            // Mettre à jour l'affichage
+            document.getElementById('licenseStatus').textContent = 'Activé';
+            document.getElementById('licenseStatus').className = 'status-badge status-active';
+            document.getElementById('expiryDate').textContent = validation.expiryDate.toLocaleDateString('fr-FR');
+
+            // Rediriger automatiquement vers l'application
+            setTimeout(() => {
+                window.location.href = 'gestion-ventes-mobile-AVEC-LICENCE.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
